@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureMesh Technologies – Privacy-First Decentralized Communication</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a0f;
+    --surface: #0c1520;
+    --surface2: #111d2b;
+    --accent: #00e5ff;
+    --accent2: #00ff88;
+    --accent3: #7b5ea7;
+    --text: #e2eaf0;
+    --muted: #607080;
+    --border: rgba(0,229,255,0.15);
+    --glow: 0 0 30px rgba(0,229,255,0.25);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* =================== NAV =================== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(5,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent2); }
+
+  nav ul {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    font-weight: 600;
+  }
+  nav ul a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent) !important;
+    padding: 8px 20px;
+    border-radius: 2px;
+    transition: all 0.3s !important;
+  }
+  .nav-cta:hover {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+  }
+
+  /* =================== HERO =================== */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-orb {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+  .hero-orb2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
+    top: 30%;
+    right: 15%;
+    pointer-events: none;
+    animation: pulse 6s ease-in-out infinite reverse;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 30px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    animation: fadeDown 0.9s 0.1s ease both;
+  }
+
+  h1 .cyan { color: var(--accent); }
+  h1 .green { color: var(--accent2); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    animation: fadeDown 1s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    animation: fadeDown 1.1s 0.3s ease both;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 14px 36px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 2px;
+    box-shadow: var(--glow);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,229,255,0.4); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 36px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 60px;
+    margin-top: 80px;
+    animation: fadeDown 1.2s 0.4s ease both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* =================== SECTION BASE =================== */
+  section { position: relative; z-index: 1; }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .section-header {
+    margin-bottom: 64px;
+    text-align: center;
+  }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 16px auto 0;
+  }
+
+  /* =================== FEATURES =================== */
+  #features {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    padding: 40px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s;
+  }
+  .feature-card:hover { background: var(--surface2); }
+  .feature-card:hover::before { height: 100%; }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+  }
+
+  .feature-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* =================== MARKET ANALYSIS =================== */
+  #market {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .market-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .market-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+  }
+
+  .market-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .target-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .target-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .target-list li::before {
+    content: '▸';
+    color: var(--accent2);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  /* =================== SWOT =================== */
+  #swot {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .swot-card {
+    padding: 50px;
+    background: var(--surface);
+    position: relative;
+  }
+  .swot-card:hover { background: var(--surface2); }
+
+  .swot-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .swot-card.s .swot-label { color: var(--accent2); }
+  .swot-card.w .swot-label { color: #ff6b6b; }
+  .swot-card.o .swot-label { color: var(--accent); }
+  .swot-card.t .swot-label { color: #ffa857; }
+
+  .swot-card h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+  }
+
+  .swot-card.s h3 { color: var(--accent2); }
+  .swot-card.w h3 { color: #ff6b6b; }
+  .swot-card.o h3 { color: var(--accent); }
+  .swot-card.t h3 { color: #ffa857; }
+
+  .swot-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+  }
+
+  .swot-items li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .swot-items li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--border);
+  }
+
+  /* =================== MARKETING 4P =================== */
+  #marketing {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .marketing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .marketing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .marketing-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: var(--glow);
+  }
+
+  .marketing-p {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(0,229,255,0.06);
+    line-height: 1;
+  }
+
+  .marketing-card h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+
+  .marketing-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .marketing-items li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+  }
+  .marketing-items li::before {
+    content: '→';
+    color: var(--accent2);
+    flex-shrink: 0;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* =================== COMPETITORS =================== */
+  #competitors {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .comp-table th {
+    background: var(--surface2);
+    padding: 16px 24px;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comp-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(0,229,255,0.05);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: var(--surface2); color: var(--text); }
+
+  .tag-green {
+    display: inline-block;
+    background: rgba(0,255,136,0.1);
+    color: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .tag-red {
+    display: inline-block;
+    background: rgba(255,107,107,0.1);
+    color: #ff6b6b;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* =================== TEAM =================== */
+  #team {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .team-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .team-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--bg);
+  }
+
+  .team-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .team-id {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* =================== CONTACT =================== */
+  #contact {
+    padding: 120px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-left h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .contact-left p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.9rem;
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-val {
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .contact-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-group select option { background: var(--surface); }
+
+  .form-submit {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .form-submit:hover {
+    background: var(--accent2);
+    box-shadow: 0 0 30px rgba(0,255,136,0.3);
+  }
+
+  /* =================== FOOTER =================== */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    position: relative;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .footer-tagline {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* =================== SCROLL REVEAL =================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* =================== POSITIONING STRIP =================== */
+  .positioning-strip {
+    background: linear-gradient(90deg, rgba(0,229,255,0.1), rgba(0,255,136,0.1));
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 30px 40px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .positioning-strip .quote {
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* =================== MOBILE =================== */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    nav ul { display: none; }
+    .container { padding: 0 20px; }
+    .market-grid, .swot-grid, .marketing-grid, .contact-inner { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 30px; }
+    footer { flex-direction: column; text-align: center; padding: 30px 20px; }
+    .comp-table { font-size: 0.8rem; }
+    .comp-table th, .comp-table td { padding: 12px 14px; }
+  }
+
+  /* =================== MOBILE MENU =================== */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    width: 22px;
+    height: 2px;
+    background: var(--accent);
+    display: block;
+    transition: all 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    nav ul {
+      display: none;
+      position: fixed;
+      top: 60px; left: 0; right: 0;
+      background: var(--surface);
+      flex-direction: column;
+      padding: 20px;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    nav ul.open { display: flex; }
+  }
+
+  /* Animated counter */
+  .counter { display: inline-block; }
+
+  /* Network animation canvas */
+  #network-canvas {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 14px 24px;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 1000;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* =================== AUTH MODAL =================== */
+  .auth-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,10,15,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    padding: 20px;
+  }
+  .auth-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .auth-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 460px;
+    padding: 48px 44px;
+    position: relative;
+    transform: translateY(30px) scale(0.97);
+    transition: transform 0.35s ease;
+    box-shadow: 0 0 80px rgba(0,229,255,0.1);
+  }
+  .auth-overlay.active .auth-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .auth-close {
+    position: absolute;
+    top: 18px; right: 20px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+    padding: 4px 8px;
+  }
+  .auth-close:hover { color: var(--accent); }
+
+  .auth-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .auth-logo span { color: var(--accent2); }
+
+  .auth-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .auth-sub {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* Tab switcher */
+  .auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .auth-tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    transition: all 0.25s;
+  }
+  .auth-tab.active {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  /* Auth form panels */
+  .auth-panel { display: none; }
+  .auth-panel.active { display: block; }
+
+  .auth-field {
+    margin-bottom: 18px;
+  }
+
+  .auth-field label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  .auth-field input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .auth-field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+  }
+  .auth-field input.error {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 3px rgba(255,107,107,0.08);
+  }
+
+  .auth-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .auth-error {
+    font-size: 0.75rem;
+    color: #ff6b6b;
+    margin-top: 5px;
+    font-family: 'Space Mono', monospace;
+    display: none;
+  }
+  .auth-error.show { display: block; }
+
+  .auth-forgot {
+    display: block;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 18px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+  }
+  .auth-forgot:hover { color: var(--accent); }
+
+  /* Password strength */
+  .strength-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    transition: width 0.4s, background 0.4s;
+  }
+  .strength-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Password toggle */
+  .auth-field .input-wrap {
+    position: relative;
+  }
+  .auth-field .input-wrap input {
+    padding-right: 44px;
+  }
+  .toggle-pw {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1rem;
+    transition: color 0.2s;
+    padding: 0;
+    line-height: 1;
+  }
+  .toggle-pw:hover { color: var(--accent); }
+
+  /* Checkbox */
+  .auth-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 22px;
+    cursor: pointer;
+  }
+  .auth-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .auth-check span {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .auth-check span a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .auth-btn {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 13px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .auth-btn:hover {
+    background: var(--accent2);
+    box-shadow: 0 0 30px rgba(0,255,136,0.3);
+  }
+  .auth-btn:active { transform: scale(0.98); }
+
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+  }
+  .auth-divider::before,
+  .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .auth-switch {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 20px;
+  }
+  .auth-switch button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Logged-in state nav */
+  .user-pill {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    cursor: pointer;
+    position: relative;
+  }
+  .user-pill.visible { display: flex; }
+
+  .user-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--bg);
+  }
+
+  .user-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    min-width: 160px;
+    overflow: hidden;
+    display: none;
+    z-index: 200;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+  .user-pill:hover .user-dropdown { display: block; }
+
+  .user-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 11px 16px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .user-dropdown button:hover { background: var(--surface2); color: var(--accent); }
+  .user-dropdown button.logout { color: #ff6b6b; }
+  .user-dropdown button.logout:hover { background: rgba(255,107,107,0.08); }
+
+  /* Auth nav buttons */
+  .auth-nav-btns {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .btn-login {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  .btn-login:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-signup-nav {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 7px 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    box-shadow: var(--glow);
+  }
+  .btn-signup-nav:hover { background: var(--accent2); }
+
+  @media (max-width: 768px) {
+    .auth-modal { padding: 36px 24px; }
+    .auth-field-row { grid-template-columns: 1fr; }
+    .auth-nav-btns { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Message sent successfully!</div>
+
+<!-- =================== AUTH MODAL =================== -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-modal" id="authModal">
+    <button class="auth-close" onclick="closeAuth()" aria-label="Close">✕</button>
+    <div class="auth-logo">SECURE<span>MESH</span></div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="auth-panel active" id="panel-login">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-sub">Secure access to your decentralized workspace.</p>
+
+      <div class="auth-field">
+        <label>Email Address</label>
+        <input type="email" id="l-email" placeholder="you@institution.edu" oninput="clearErr(this)">
+        <span class="auth-error" id="l-email-err">Please enter a valid email.</span>
+      </div>
+
+      <div class="auth-field">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" id="l-password" placeholder="Your password" oninput="clearErr(this)">
+          <button class="toggle-pw" onclick="togglePw('l-password', this)" type="button">👁</button>
+        </div>
+        <span class="auth-error" id="l-password-err">Password is required.</span>
+      </div>
+
+      <button class="auth-forgot" onclick="showForgot()">Forgot password?</button>
+
+      <button class="auth-btn" onclick="doLogin()">LOGIN →</button>
+
+      <div class="auth-divider">or</div>
+      <p class="auth-switch">Don't have an account? <button onclick="switchTab('signup')">Sign Up</button></p>
+    </div>
+
+    <!-- SIGNUP PANEL -->
+    <div class="auth-panel" id="panel-signup">
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-sub">Join SecureMesh — privacy-first, zero compromise.</p>
+
+      <div class="auth-field-row">
+        <div class="auth-field">
+          <label>First Name</label>
+          <input type="text" id="s-fname" placeholder="Ahmed" oninput="clearErr(this)">
+          <span class="auth-error" id="s-fname-err">Required.</span>
+        </div>
+        <div class="auth-field">
+          <label>Last Name</label>
+          <input type="text" id="s-lname" placeholder="Khan" oninput="clearErr(this)">
+          <span class="auth-error" id="s-lname-err">Required.</span>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>Email Address</label>
+        <input type="email" id="s-email" placeholder="you@institution.edu" oninput="clearErr(this)">
+        <span class="auth-error" id="s-email-err">Please enter a valid email.</span>
+      </div>
+
+      <div class="auth-field">
+        <label>Organization</label>
+        <input type="text" id="s-org" placeholder="University / Company name">
+      </div>
+
+      <div class="auth-field">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" id="s-password" placeholder="Min. 8 characters" oninput="checkStrength(this); clearErr(this)">
+          <button class="toggle-pw" onclick="togglePw('s-password', this)" type="button">👁</button>
+        </div>
+        <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+        <span class="strength-label" id="strength-label"></span>
+        <span class="auth-error" id="s-password-err">Min. 8 characters required.</span>
+      </div>
+
+      <div class="auth-field">
+        <label>Confirm Password</label>
+        <div class="input-wrap">
+          <input type="password" id="s-confirm" placeholder="Repeat password" oninput="clearErr(this)">
+          <button class="toggle-pw" onclick="togglePw('s-confirm', this)" type="button">👁</button>
+        </div>
+        <span class="auth-error" id="s-confirm-err">Passwords do not match.</span>
+      </div>
+
+      <label class="auth-check">
+        <input type="checkbox" id="s-terms">
+        <span>I agree to the <a href="#" onclick="return false;">Terms of Service</a> and <a href="#" onclick="return false;">Privacy Policy</a></span>
+      </label>
+
+      <button class="auth-btn" onclick="doSignup()">CREATE ACCOUNT →</button>
+
+      <div class="auth-divider">or</div>
+      <p class="auth-switch">Already have an account? <button onclick="switchTab('login')">Login</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">SECURE<span>MESH</span></a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="nav-menu">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#swot">SWOT</a></li>
+    <li><a href="#marketing">Marketing</a></li>
+    <li><a href="#competitors">Competitors</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <!-- Auth buttons (logged out) -->
+  <div class="auth-nav-btns" id="authNavBtns">
+    <button class="btn-login" onclick="openAuth('login')">Login</button>
+    <button class="btn-signup-nav" onclick="openAuth('signup')">Sign Up</button>
+  </div>
+  <!-- User pill (logged in) -->
+  <div class="user-pill" id="userPill">
+    <div class="user-avatar" id="userAvatar">?</div>
+    <span id="userNameLabel">User</span>
+    <span>▾</span>
+    <div class="user-dropdown">
+      <button onclick="showProfile()">👤 My Profile</button>
+      <button onclick="showDashboard()">⚡ Dashboard</button>
+      <button class="logout" onclick="doLogout()">⬡ Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="network-canvas"></canvas>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <span class="hero-badge">▲ ENTREPRENEURSHIP PROJECT — ASSIGNMENT 3 &amp; 4</span>
+  <h1>
+    <span class="cyan">Secure</span> Communication.<br>
+    <span class="green">Zero</span> Compromise.
+  </h1>
+  <p class="hero-sub">
+    SecureMesh Technologies delivers a privacy-first, decentralized peer-to-peer communication platform for universities, government departments, and enterprises — no central servers, no data leaks.
+  </p>
+  <div class="hero-btns">
+    <a href="#features" class="btn-primary">Explore Platform →</a>
+    <a href="#contact" class="btn-outline">Request Demo</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num counter" data-target="100">0</span>%
+      <span class="stat-label">Decentralized</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num counter" data-target="256">0</span>-bit
+      <span class="stat-label">Encryption</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num counter" data-target="0">0</span>
+      <span class="stat-label">Central Servers</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num counter" data-target="4">0</span>+
+      <span class="stat-label">Target Sectors</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// Product</span>
+      <h2 class="section-title">Built for Privacy. Built for Scale.</h2>
+      <p class="section-desc">Every feature of SecureMesh is engineered to keep your data in your hands, not on someone else's server.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3 class="feature-title">Peer-to-Peer Messaging</h3>
+        <p class="feature-desc">Direct device-to-device communication with no relay servers. Messages travel only between sender and receiver.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 class="feature-title">End-to-End Encryption</h3>
+        <p class="feature-desc">Military-grade encryption ensures that only the intended recipients can read your messages — not even us.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <h3 class="feature-title">Secure File Sharing</h3>
+        <p class="feature-desc">Share documents, images, and data securely through encrypted channels with zero cloud storage exposure.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3 class="feature-title">LAN / Offline Mode</h3>
+        <p class="feature-desc">Works on local area networks without internet access — ideal for air-gapped or restricted environments.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏛️</div>
+        <h3 class="feature-title">Institutional Customization</h3>
+        <p class="feature-desc">Tailored deployments for universities, government departments, and corporate organizations with dedicated support.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Lightweight & Fast</h3>
+        <p class="feature-desc">Simple, user-friendly interface with minimal resource usage. Deploy on existing hardware without major upgrades.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET ANALYSIS -->
+<section id="market">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// Market Analysis</span>
+      <h2 class="section-title">Who We Serve</h2>
+      <p class="section-desc">SecureMesh targets organizations that require secure, private, and independent communication systems across Pakistan and emerging markets.</p>
+    </div>
+
+    <div class="positioning-strip reveal">
+      <p class="quote">"SecureMesh — A Privacy-First, Decentralized Communication Platform for Organizations"</p>
+    </div>
+
+    <div class="market-grid reveal">
+      <div class="market-card">
+        <h3>// PRIMARY TARGETS</h3>
+        <ul class="target-list">
+          <li>Universities & Educational Institutions</li>
+          <li>Government Departments</li>
+          <li>Small & Medium Enterprises (SMEs)</li>
+          <li>Corporate Organizations</li>
+        </ul>
+      </div>
+      <div class="market-card">
+        <h3>// WHY THIS MARKET?</h3>
+        <ul class="target-list">
+          <li>High demand for data privacy & security</li>
+          <li>Escalating cybersecurity threats</li>
+          <li>Need for internal communication infrastructure</li>
+          <li>Desire to reduce cloud server dependency</li>
+        </ul>
+      </div>
+      <div class="market-card">
+        <h3>// SEGMENTATION — GEO</h3>
+        <ul class="target-list">
+          <li>Pakistan (initial market)</li>
+          <li>Emerging markets: Asia, Middle East</li>
+          <li>Urban hubs: universities & corporate offices</li>
+        </ul>
+      </div>
+      <div class="market-card">
+        <h3>// SEGMENTATION — DEMO</h3>
+        <ul class="target-list">
+          <li>Age 18–55, students to executives</li>
+          <li>Occupation: IT staff, administrators, professionals</li>
+          <li>Education: Undergraduate & above</li>
+          <li>Medium to high institutional income</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SWOT -->
+<section id="swot">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// SWOT Analysis</span>
+      <h2 class="section-title">Honest Assessment</h2>
+      <p class="section-desc">Where we're strong, where we can improve, and what the market holds for SecureMesh.</p>
+    </div>
+    <div class="swot-grid reveal">
+      <div class="swot-card s">
+        <span class="swot-label">Strengths</span>
+        <h3>S</h3>
+        <ul class="swot-items">
+          <li>Strong privacy & security architecture</li>
+          <li>Cost-efficient — no server infrastructure needed</li>
+          <li>Unique fully decentralized model</li>
+          <li>Suitable for sensitive institutional environments</li>
+        </ul>
+      </div>
+      <div class="swot-card w">
+        <span class="swot-label">Weaknesses</span>
+        <h3>W</h3>
+        <ul class="swot-items">
+          <li>Low brand awareness in early stages</li>
+          <li>Requires institutional trust-building</li>
+          <li>Technical complexity for non-IT users</li>
+        </ul>
+      </div>
+      <div class="swot-card o">
+        <span class="swot-label">Opportunities</span>
+        <h3>O</h3>
+        <ul class="swot-items">
+          <li>Growing global cybersecurity concerns</li>
+          <li>Increasing demand for private communications</li>
+          <li>Expansion potential into international markets</li>
+          <li>Favorable data protection legislation trends</li>
+        </ul>
+      </div>
+      <div class="swot-card t">
+        <span class="swot-label">Threats</span>
+        <h3>T</h3>
+        <ul class="swot-items">
+          <li>Strong established competitors (WhatsApp, Telegram)</li>
+          <li>Rapid pace of technology changes</li>
+          <li>Legal restrictions on encryption in some regions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITORS -->
+<section id="competitors">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// Competitor Analysis</span>
+      <h2 class="section-title">The Landscape</h2>
+      <p class="section-desc">How SecureMesh stacks up against direct and indirect competitors in the communication space.</p>
+    </div>
+    <div class="reveal">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Type</th>
+            <th>Decentralized</th>
+            <th>Offline / LAN</th>
+            <th>No Cloud Storage</th>
+            <th>B2B / Institutional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--accent); font-weight:700; font-family:'Space Mono',monospace;">SecureMesh</td>
+            <td><span class="tag-green">Direct</span></td>
+            <td><span class="tag-green">✓ Yes</span></td>
+            <td><span class="tag-green">✓ Yes</span></td>
+            <td><span class="tag-green">✓ Yes</span></td>
+            <td><span class="tag-green">✓ Yes</span></td>
+          </tr>
+          <tr>
+            <td>WhatsApp</td>
+            <td><span class="tag-red">Direct</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ Limited</span></td>
+          </tr>
+          <tr>
+            <td>Telegram</td>
+            <td><span class="tag-red">Direct</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ Limited</span></td>
+          </tr>
+          <tr>
+            <td>Signal</td>
+            <td><span class="tag-red">Direct</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-green">✓ Partial</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+          </tr>
+          <tr>
+            <td>Microsoft Teams</td>
+            <td><span class="tag-red">Indirect</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-green">✓ Yes</span></td>
+          </tr>
+          <tr>
+            <td>Slack</td>
+            <td><span class="tag-red">Indirect</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-red">✗ No</span></td>
+            <td><span class="tag-green">✓ Yes</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETING 4P -->
+<section id="marketing">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// Marketing Plan</span>
+      <h2 class="section-title">The 4P Strategy</h2>
+      <p class="section-desc">How SecureMesh reaches, prices, distributes, and promotes its platform to institutional clients.</p>
+    </div>
+    <div class="marketing-grid reveal">
+      <div class="marketing-card">
+        <span class="marketing-p">P1</span>
+        <h3>Product</h3>
+        <ul class="marketing-items">
+          <li>P2P encrypted messaging platform</li>
+          <li>Secure file sharing module</li>
+          <li>Lightweight, user-friendly design</li>
+          <li>Technical support & training for organizations</li>
+          <li>Maintenance & update services</li>
+        </ul>
+      </div>
+      <div class="marketing-card">
+        <span class="marketing-p">P2</span>
+        <h3>Price</h3>
+        <ul class="marketing-items">
+          <li>Subscription-based B2B model</li>
+          <li>Free trial for institutions</li>
+          <li>University & NGO discounts</li>
+          <li>Customized enterprise pricing</li>
+          <li>High margin: zero server infrastructure cost</li>
+        </ul>
+      </div>
+      <div class="marketing-card">
+        <span class="marketing-p">P3</span>
+        <h3>Place</h3>
+        <ul class="marketing-items">
+          <li>Pakistan-first, then international expansion</li>
+          <li>Direct institutional sales team</li>
+          <li>Website & online platform</li>
+          <li>IT company partnerships</li>
+          <li>Downloadable app + local network installation</li>
+        </ul>
+      </div>
+      <div class="marketing-card">
+        <span class="marketing-p">P4</span>
+        <h3>Promotion</h3>
+        <ul class="marketing-items">
+          <li>LinkedIn B2B campaigns</li>
+          <li>University seminars & tech conferences</li>
+          <li>Cybersecurity awareness campaigns</li>
+          <li>Email campaigns to institutions</li>
+          <li>Pilot programs & live demos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// Our Team</span>
+      <h2 class="section-title">The Founders</h2>
+      <p class="section-desc">Building SecureMesh with a shared passion for privacy, security, and innovation.</p>
+    </div>
+    <div class="team-grid reveal">
+      <div class="team-card">
+        <div class="team-avatar">FY</div>
+        <p class="team-name">Faizan Yousaf</p>
+        <p class="team-id">22F-3387</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">YA</div>
+        <p class="team-name">Yahya Asif</p>
+        <p class="team-id">22F-3078</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">GH</div>
+        <p class="team-name">Ghayas Hussain</p>
+        <p class="team-id">22F-3875</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <span class="section-tag">// Contact</span>
+        <h2>Get In Touch<br>With <span style="color:var(--accent)">SecureMesh</span></h2>
+        <p>Interested in a pilot program for your institution? Ready to secure your organization's communications? Reach out and we'll set up a free demo.</p>
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="contact-icon">📞</div>
+            <span class="contact-val">+92 300 6659200</span>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">✉️</div>
+            <span class="contact-val">securemesh.official@gmail.com</span>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">📅</div>
+            <span class="contact-val">Est. March 30, 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="f-name" placeholder="e.g. Ahmed Khan">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="f-email" placeholder="you@institution.edu">
+        </div>
+        <div class="form-group">
+          <label>Organization Type</label>
+          <select id="f-org">
+            <option value="">Select your sector...</option>
+            <option>University / Educational Institution</option>
+            <option>Government Department</option>
+            <option>Small or Medium Enterprise</option>
+            <option>Corporate Organization</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="f-msg" placeholder="Tell us about your communication needs..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">SEND MESSAGE →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">SECUREMESH TECHNOLOGIES</span>
+  <span class="footer-tagline">Privacy-First · Decentralized · Institutional Grade</span>
+  <span class="footer-copy">© 2026 SecureMesh Technologies. All rights reserved.</span>
+</footer>
+
+<script>
+// MOBILE MENU
+function toggleMenu() {
+  document.getElementById('nav-menu').classList.toggle('open');
+}
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// COUNTER ANIMATION
+function animateCounters() {
+  document.querySelectorAll('.counter').forEach(counter => {
+    const target = parseInt(counter.dataset.target);
+    const duration = 1500;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        counter.textContent = target;
+        clearInterval(timer);
+      } else {
+        counter.textContent = Math.floor(current);
+      }
+    }, 16);
+  });
+}
+
+const heroObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) animateCounters();
+}, { threshold: 0.5 });
+
+heroObserver.observe(document.getElementById('hero'));
+
+// NETWORK CANVAS
+const canvas = document.getElementById('network-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [];
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+function initNodes() {
+  nodes = [];
+  const count = Math.floor((canvas.width * canvas.height) / 18000);
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 2 + 1
+    });
+  }
+}
+
+function drawNetwork() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  nodes.forEach(n => {
+    n.x += n.vx;
+    n.y += n.vy;
+    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,229,255,0.7)';
+    ctx.fill();
+  });
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = `rgba(0,229,255,${0.15 * (1 - dist / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawNetwork);
+}
+
+resizeCanvas();
+initNodes();
+drawNetwork();
+window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
+
+// FORM SUBMISSION
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+
+  if (!name || !email) {
+    alert('Please fill in your name and email address.');
+    return;
+  }
+
+  showToast('✓ Message sent successfully!');
+
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-email').value = '';
+  document.getElementById('f-org').value = '';
+  document.getElementById('f-msg').value = '';
+}
+
+// SMOOTH NAV CLOSE ON LINK CLICK
+document.querySelectorAll('nav ul a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('nav-menu').classList.remove('open');
+  });
+});
+
+// =================== AUTH SYSTEM ===================
+// Simple in-memory user store (demo — no real backend)
+let users = JSON.parse(localStorage.getItem('sm_users') || '[]');
+let currentUser = JSON.parse(localStorage.getItem('sm_current') || 'null');
+
+// Restore session on load
+window.addEventListener('DOMContentLoaded', () => {
+  if (currentUser) setLoggedIn(currentUser);
+});
+
+function openAuth(tab = 'login') {
+  const overlay = document.getElementById('authOverlay');
+  overlay.classList.add('active');
+  switchTab(tab);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAuth() {
+  document.getElementById('authOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('authOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAuth();
+});
+
+// ESC key close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAuth();
+});
+
+function switchTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('panel-login').classList.toggle('active', tab === 'login');
+  document.getElementById('panel-signup').classList.toggle('active', tab === 'signup');
+}
+
+function clearErr(input) {
+  input.classList.remove('error');
+  const err = document.getElementById(input.id + '-err');
+  if (err) err.classList.remove('show');
+}
+
+function showErr(id, msg) {
+  const input = document.getElementById(id);
+  const err = document.getElementById(id + '-err');
+  if (input) input.classList.add('error');
+  if (err) { err.textContent = msg; err.classList.add('show'); }
+  return false;
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Password strength checker
+function checkStrength(input) {
+  const val = input.value;
+  const fill = document.getElementById('strength-fill');
+  const label = document.getElementById('strength-label');
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+
+  const levels = [
+    { w: '0%', color: 'transparent', text: '' },
+    { w: '25%', color: '#ff6b6b', text: 'Weak' },
+    { w: '50%', color: '#ffa857', text: 'Fair' },
+    { w: '75%', color: '#00e5ff', text: 'Good' },
+    { w: '100%', color: '#00ff88', text: 'Strong' }
+  ];
+  const lvl = val.length === 0 ? 0 : Math.max(1, score);
+  fill.style.width = levels[lvl].w;
+  fill.style.background = levels[lvl].color;
+  label.textContent = levels[lvl].text;
+}
+
+// Toggle password visibility
+function togglePw(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
+  }
+}
+
+// LOGIN
+function doLogin() {
+  let ok = true;
+  const email = document.getElementById('l-email').value.trim();
+  const password = document.getElementById('l-password').value;
+
+  if (!isValidEmail(email)) { showErr('l-email', 'Please enter a valid email.'); ok = false; }
+  if (!password) { showErr('l-password', 'Password is required.'); ok = false; }
+  if (!ok) return;
+
+  const found = users.find(u => u.email === email && u.password === password);
+  if (!found) {
+    showErr('l-email', 'No account found with these credentials.');
+    showErr('l-password', 'Incorrect email or password.');
+    return;
+  }
+
+  setLoggedIn(found);
+  closeAuth();
+  showToast('✓ Welcome back, ' + found.fname + '!');
+}
+
+// SIGNUP
+function doSignup() {
+  let ok = true;
+  const fname = document.getElementById('s-fname').value.trim();
+  const lname = document.getElementById('s-lname').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const password = document.getElementById('s-password').value;
+  const confirm = document.getElementById('s-confirm').value;
+  const terms = document.getElementById('s-terms').checked;
+
+  if (!fname) { showErr('s-fname', 'First name required.'); ok = false; }
+  if (!lname) { showErr('s-lname', 'Last name required.'); ok = false; }
+  if (!isValidEmail(email)) { showErr('s-email', 'Please enter a valid email.'); ok = false; }
+  if (password.length < 8) { showErr('s-password', 'Min. 8 characters required.'); ok = false; }
+  if (password !== confirm) { showErr('s-confirm', 'Passwords do not match.'); ok = false; }
+  if (!ok) return;
+
+  if (!terms) { alert('Please accept the Terms of Service to continue.'); return; }
+  if (users.find(u => u.email === email)) {
+    showErr('s-email', 'An account with this email already exists.');
+    return;
+  }
+
+  const newUser = { fname, lname, email, password, org: document.getElementById('s-org').value.trim() };
+  users.push(newUser);
+  localStorage.setItem('sm_users', JSON.stringify(users));
+  setLoggedIn(newUser);
+  closeAuth();
+  showToast('✓ Account created! Welcome, ' + fname + '!');
+}
+
+function setLoggedIn(user) {
+  currentUser = user;
+  localStorage.setItem('sm_current', JSON.stringify(user));
+  document.getElementById('authNavBtns').style.display = 'none';
+  const pill = document.getElementById('userPill');
+  pill.classList.add('visible');
+  document.getElementById('userNameLabel').textContent = user.fname;
+  document.getElementById('userAvatar').textContent = (user.fname[0] + user.lname[0]).toUpperCase();
+}
+
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('sm_current');
+  document.getElementById('authNavBtns').style.display = '';
+  document.getElementById('userPill').classList.remove('visible');
+  showToast('👋 Logged out successfully.');
+}
+
+function showProfile() {
+  if (!currentUser) return;
+  alert(`👤 PROFILE\n\nName: ${currentUser.fname} ${currentUser.lname}\nEmail: ${currentUser.email}\nOrganization: ${currentUser.org || '—'}`);
+}
+
+function showDashboard() {
+  showToast('⚡ Dashboard coming soon — stay tuned!');
+}
+
+function showForgot() {
+  const email = prompt('Enter your registered email address:');
+  if (email && isValidEmail(email)) {
+    showToast('📧 Password reset link sent (demo mode).');
+  } else if (email) {
+    alert('Please enter a valid email address.');
+  }
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
